@@ -1,5 +1,8 @@
 require 'csv'
 
+# Intouch Marsvongpragorn 5631371921
+# Benjaporn Pianphanitporn 5631270121
+
 Enumerable.class_eval do
   def mode
     group_by do |e|
@@ -7,7 +10,7 @@ Enumerable.class_eval do
     end.values.max_by(&:size).first
   end
   def antimode
-  	group_by do |e|
+    group_by do |e|
       e
     end.values.min_by(&:size).first
   end
@@ -29,12 +32,12 @@ min_color = color_array.antimode()
 max_score = score_array_temp.max
 min_score = score_array_temp.min
 data_array.each do |row|
-	name = row['Name'].split(" ").map { |word| word.capitalize }.join(" ")
-	if row['Score'] == max_score
-		puts "Name Max: #{name}" #=> Get Max Score student
-	elsif row['Score'] == min_score
-		puts "Name Min: #{name}"
-	end
+  name = row['Name'].split(" ").map { |word| word.gsub(/.\b/) { |m| m.upcase } }.join(" ")
+  if row['Score'] == max_score
+    puts "Name Max: #{name}" #=> Get Max Score student
+  elsif row['Score'] == min_score
+    puts "Name Min: #{name}"
+  end
 end
 
 score_array = score_array_temp.collect{|i| i.to_f}
@@ -44,14 +47,8 @@ puts "Most Color: #{color_array.mode()}"
 print "Least Color:"
 h = color_array.dup_hash()
 h.each do |row|
-	if(row[1] == h[color_array.antimode()])
-		print " #{row[0]}"
-	end
+  if(row[1] == h[color_array.antimode()])
+    print " #{row[0]}"
+  end
 end
 puts ""
-
-# 1. Which student has the highest score in the class? Lowest?
-# 2. What is the mean of all student’s scores?
-# 3. What is the most popular color among students? Least popular?
-# 4. Capitalize the last letter of first name and last name, and lowercase the first letter of first 
-# name and last name.
